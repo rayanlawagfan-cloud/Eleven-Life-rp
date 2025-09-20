@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eleven Life RP - أفضل سيرفر حياة واقعية MTA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid #ff6b35;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mta-badge {
+            background: #ff6b35;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #ff6b35;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 140, 66, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b35, #ff8c42, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+        }
+
+        @keyframes glow {
+            from { 
+                filter: brightness(1);
+                transform: scale(1);
+            }
+            to { 
+                filter: brightness(1.2);
+                transform: scale(1.02);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #ff8c42;
+            font-weight: bold;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.5);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid #ff6b35;
+        }
+
+        .cta-button.secondary:hover {
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+        }
+
+        /* Server Info */
+        .server-info {
+            background: rgba(255, 107, 53, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            margin: 2rem auto;
+            max-width: 600px;
+            border: 1px solid #ff6b35;
+        }
+
+        .server-ip {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.3);
+            border-color: #ff6b35;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            color: #ff6b35;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #ff8c42;
+            text-align: center;
+        }
+
+        .card p {
+            opacity: 0.9;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* Rules Section */
+        .rules-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .rule-item {
+            background: rgba(255, 255, 255, 0.08);
+            border-right: 5px solid #ff6b35;
+            margin: 1.5rem 0;
+            padding: 2rem;
+            border-radius: 0 15px 15px 0;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .rule-item:hover {
+            background: rgba(255, 107, 53, 0.15);
+            transform: translateX(-10px);
+            box-shadow: 5px 5px 20px rgba(255, 107, 53, 0.2);
+        }
+
+        .rule-number {
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+        .rule-title {
+            color: #ff8c42;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Community Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 140, 66, 0.05));
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: scale(1.05);
+            border-color: #ff6b35;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #ff6b35;
+            margin-bottom: 1rem;
+        }
+
+        /* Discord Section */
+        .discord-section {
+            background: linear-gradient(135deg, #5865f2 0%, #7289da 100%);
+            border-radius: 25px;
+            padding: 4rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discord-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .discord-section h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .discord-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .discord-button {
+            display: inline-block;
+            background: #fff;
+            color: #5865f2;
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .discord-button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 2px solid #ff6b35;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(0,0,0,0.98);
+                flex-direction: column;
+                justify-content: center;
+                transition: right 0.4s ease;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .discord-section {
+                padding: 2rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <div class="logo-text">Eleven Life RP</div>
+                <div class="mta-badge">MTA</div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#about">عن السيرفر</a></li>
+                <li><a href="#rules">القوانين</a></li>
+                <li><a href="#community">المجتمع</a></li>
+                <li><a href="#discord">ديسكورد</a></li>
+            </ul>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content fade-in">
+            <h1>Eleven Life RP</h1>
+            <div class="hero-subtitle">أفضل تجربة حياة واقعية على MTA</div>
+            <p>انضم لأكبر وأفضل سيرفر حياة واقعية في الوطن العربي. عش حياة جديدة مليئة بالمغامرات والتجارب الواقعية</p>
+            
+            <div class="server-info">
+                <div class="server-ip">IP: mtasa://elevn-life.com:22003</div>
+                <div>اللاعبين الحاليين: 🟢 Online | الإصدار: MTA 1.5.9</div>
+            </div>
+
+            <div class="hero-buttons">
+                <a href="#about" class="cta-button bounce">اكتشف السيرفر</a>
+                <a href="mtasa://elevn-life.com:22003" class="cta-button secondary">انضم الآن</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">عن سيرفر Eleven Life RP</h2>
+            <div class="cards-grid">
+                <div class="card fade-in">
+                    <div class="card-icon">🏙</div>
+                    <h3>عالم واقعي متكامل</h3>
+                    <p>مدينة ضخمة مليئة بالتفاصيل الواقعية، مع أحياء متنوعة، شركات، محلات، مستشفيات، ومراكز شرطة. كل شيء مصمم ليحاكي الحياة الواقعية.</p>
+                </div>
+                <div class="card fade-in">
+                    <div class="card-icon">💼</div>
+                    <h3>وظائف متنوعة</h3>
+                    <p>أكثر من 20 وظيفة مختلفة: شرطي، طبيب، سائق تاكسي، ميكانيكي، تاجر، محامي، وغيرها الكثير. كل وظيفة لها مهامها ومميزاتها الخاصة.</p>
+                </div>
+                <div class="card fade-in">
+                    <div class="card-icon">🚗</div>
+                    <h3>سيارات وعقارات</h3>
+                    <p>أكثر من 500 سيارة مختلفة، منازل وشقق للإيجار والشراء، نظام تأمين متطور، ورخص قيادة حقيقية.</p>
+                </div>
+                <div class="card fade-in">
+                    <div class="card-icon">⚖</div>
+                    <h3>نظام قضائي</h3>
+                    <p>محاكم حقيقية، قضاة، محامين، وسجون. نظام عدالة متكامل يضمن تجربة واقعية ومنصفة لجميع اللاعبين.</p>
+                </div>
+                <div class="card fade-in">
+                    <div class="card-icon">🏥</div>
+                    <h3>نظام صحي متطور</h3>
+                    <p>مستشفيات مجهزة، أطباء محترفون، عمليات جراحية، وعلاج طبيعي. اعتن بصحة شخصيتك كما في الحياة الحقيقية.</p>
+                </div>
+                <div class="card fade-in">
+                    <div class="card-icon">🎭</div>
+                    <h3>فعاليات مستمرة</h3>
+                    <p>فعاليات يومية وأسبوعية، مسابقات، حفلات، سباقات سيارات، ومهرجانات. دائماً هناك شيء مثير يحدث في المدينة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section id="rules" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">قوانين السيرفر</h2>
+            <div class="rules-container">
+                <div class="rule-item">
+                    <span class="rule-number">1.</span>
+                    <div class="rule-title">احترام اللاعبين والإدارة</div>
+                    يجب التعامل مع جميع اللاعبين وأعضاء الإدارة باحترام ولطف. لا يُسمح بالسب، التنمر، أو أي سلوك غير لائق في الشات أو الصوت.
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">2.</span>
+                    <div class="rule-title">اللعب الواقعي (RolePlay)</div>
+                    يجب اللعب بطريقة واقعية ومنطقية. تصرف كما لو كنت في الحياة الحقيقية. لا تقم بأعمال خارقة أو غير منطقية.
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">3.</span>
+                    <div class="rule-title">عدم القتل العشوائي (RDM)</div>
+                    ممنوع قتل اللاعبين بدون سبب واقعي ومقنع. يجب أن يكون لديك سبب قوي ومبرر لأي عمل عنيف.
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">4.</span>
+                    <div class="rule-title">عدم القيادة المجنونة (VDM)</div>
+                    ممنوع استخدام السيارة كسلاح لإيذاء اللاعبين. القيادة يجب أن تكون واقعية وآمنة.
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">5.</span>
+                    <div class="rule-title">عدم استخدام المعلومات الخارجية (MG)</div>
+                    ممنوع استخدام معلومات حصلت عليها من خارج اللعبة (ديسكورد، تيم سبيك، إلخ) داخل اللعب.
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">6.</span>
+                    <div class="rule-title">احترام رجال الأمن والقانون</div>
+                    يجب احترام رجال الشرطة والقوانين. إذا تم إيقافك، تعامل بطريقة واقعية ولا تهرب بدون سبب.
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">7.</span>
+                    <div class="rule-title">عدم الغش أو استخدام البرامج المحظورة</div>
+                    ممنوع استخدام أي برامج غش، هاك، أو تعديلات غير مسموحة. اللعب النظيف فقط.
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">8.</span>
+                    <div class="rule-title">الشخصيات والأسماء</div>
+                    يجب أن تكون أسماء الشخصيات واقعية ومناسبة. لا يُسمح بالأسماء المضحكة أو غير اللائقة.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">مجتمع Eleven Life</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">👥</div>
+                    <h3>+5000 لاعب نشط</h3>
+                    <p>مجتمع كبير ونشط يومياً</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <h3>فرق متخصصة</h3>
+                    <p>الشرطة، الإطفاء، الإسعاف، العصابات</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🏆</div>
+                    <h3>بطولات ومسابقات</h3>
+                    <p>فعاليات شهرية بجوائز قيمة</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <h3>دعم فني 24/7</h3>
+                    <p>فريق إدارة متاح طوال الوقت</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔧</div>
+                    <h3>تحديثات مستمرة</h3>
+                    <p>مميزات جديدة كل أسبوع</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛡</div>
+                    <div class="feature-icon">🛡</div>
+                    <h3>حماية متقدمة</h3>
+                    <p>أمان ضد الهاكرز والمخربين</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Discord Section -->
+    <section id="discord" class="section">
+        <div class="container">
+            <div class="discord-section">
+                <h3>🎮 انضم لديسكورد Eleven Life RP</h3>
+                <p>تواصل مع المجتمع، احصل على التحديثات الجديدة، وشارك في المناقشات والفعاليات</p>
+                <a href="https://discord.gg/elevnlife" class="discord-button" target="_blank">انضم للديسكورد</a>
+                <div style="margin-top: 1rem; font-size: 1.1rem;">
+                    <strong>+8000 عضو في الديسكورد</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Eleven Life RP</h3>
+                <p>أفضل تجربة حياة واقعية على منصة MTA</p>
+                <p style="margin-top: 1rem; opacity: 0.7;">
+                    IP: mtasa://elevn-life.com:22003<br>
+                    جميع الحقوق محفوظة © 2024 Eleven Life RP
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu Toggle
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Close mobile menu if open
+                const navMenu = document.querySelector('.nav-menu');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.98)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            }
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.card, .rule-item, .feature-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Copy IP to clipboard function
+        function copyIP() {
+            navigator.clipboard.writeText('mtasa://elevn-life.com:22003').then(function() {
+                alert('تم نسخ IP السيرفر!');
+            });
+        }
+
+        // Add click event to server IP
+        document.addEventListener('DOMContentLoaded', function() {
+            const serverIP = document.querySelector('.server-ip');
+            if (serverIP) {
+                serverIP.style.cursor = 'pointer';
+                serverIP.addEventListener('click', copyIP);
+                serverIP.title = 'اضغط لنسخ IP السيرفر';
+            }
+        });
+
+        // Particle effect for hero section
+        function createParticles() {
+            const hero = document.querySelector('.hero');
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: 2px;
+                    height: 2px;
+                    background: #ff6b35;
+                    pointer-events: none;
+                    opacity: 0.7;
+                    animation: float ${Math.random() * 3 + 2}s infinite ease-in-out;
+                `;
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                
+                hero.appendChild(particle);
+            }
+        }
+
+        // Add floating animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+                50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize particles
+        createParticles();
+
+        // Add typing effect to hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect
+        window.addEventListener('load', function() {
+            const heroTitle = document.querySelector('.hero-content h1');
+            if (heroTitle) {
+                const originalText = heroTitle.textContent;
+                typeWriter(heroTitle, originalText, 150);
+            }
+        });
+    </script>
